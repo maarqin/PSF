@@ -1,0 +1,280 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package beans;
+
+import controllers.DocumentoJpaController;
+import controllers.UsuarioJpaController;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpSession;
+import models.Documento;
+import models.Solicitacao;
+import models.Usuario;
+import org.apache.commons.io.IOUtils;
+import org.primefaces.component.inputtext.InputText;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
+import org.primefaces.model.DefaultStreamedContent;
+
+/**
+ *
+ * @author a
+ */
+public class DocumentoBean implements Serializable {
+//Modificar o a variavel PATH antes da entrega e na implantação 
+
+    private String PATH = "C:/Users/Guti Ivanagava/Documents/NetBeansProjects/PSF/uploads/";
+    private String usuario_logado = "";
+    private InputText input = new InputText();
+    private DefaultStreamedContent download;
+    private String parametro;
+    private UploadedFile file;
+    private DocumentoJpaController controllerDocumento = new DocumentoJpaController();
+    List<Documento> listaDocumentos = new ArrayList();
+    int quantidadecopias, quantidadepaginas;
+    private int idUsuarioLogado; 
+
+    public DocumentoBean() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
+        usuario_logado = (String) session.getAttribute("USUARIO_LOGADO_NOME");
+        idUsuarioLogado = (int) session.getAttribute("USUARIO_LOGADO_ID");
+    }
+
+    public void upload(FileUploadEvent evt) throws IOException {
+        Calendar calendar = Calendar.getInstance();
+        Solicitacao s1 = new Solicitacao();
+        UsuarioJpaController controllerUsuario = new UsuarioJpaController();
+        Usuario u = controllerUsuario.findUsuario(idUsuarioLogado);
+
+        
+        s1.setIdsolicitacao(1);
+        s1.setAtendente(null);
+        s1.setDataaplicacao(calendar.getTime());
+        s1.setDatacriacao(calendar.getTime());
+        s1.setDocumentoList(listaDocumentos);
+        s1.setNumprotocolo(Integer.MIN_VALUE);
+        s1.setPeriodoaplicacao("Tarde");
+        s1.setEstado("Solicitado");
+        s1.setTurma("CCCOMP2015");
+        s1.setUsuarioIdusuario(u);
+
+        if (listaDocumentos.size() <= 5) {
+            System.out.println("uploading" + evt.getFile().getFileName());
+            String pasta = criarPasta();
+            FacesMessage msg = new FacesMessage("Succesful", evt.getFile().getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            InputStream input = evt.getFile().getInputstream();
+            OutputStream output = new FileOutputStream(new File(pasta, evt.getFile().getFileName()));
+
+            Documento doc = new Documento();
+            doc.setQuantidadecopias(quantidadecopias);
+            doc.setEnderecodocumento(PATH + evt.getFile().getFileName());
+            doc.setNomedocumento(evt.getFile().getFileName());
+            doc.setIddocumento(Integer.MIN_VALUE);
+            doc.setQuantidadepaginas(quantidadepaginas);
+            doc.setNumdocumento(doc.getIddocumento());
+            doc.setSolicitacaoIdsolicitacao(s1);
+            
+            try {
+                IOUtils.copy(input, output);
+                //criar o arquivo e adicionar para a lista
+                System.out.println("ISDAUHUSDAHUIOSDAHHASUDIHASDUOIHASDUIOHASDOUIHSADUOISDAHUIOSDAH");
+                try {
+                    System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAADDIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIICIONOOOOOOOOOOOOOOOOOOOOOOOOU");
+                    controllerDocumento.create(doc);
+                    System.out.println("ID DO DOCUMENTO: " + doc.getIddocumento());
+                    listaDocumentos.add(doc);
+
+                    doc = null;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            } finally {
+                IOUtils.closeQuietly(input);
+                IOUtils.closeQuietly(output);
+            }
+        } else {
+            FacesMessage msg = new FacesMessage("Você não pode enviar mais de cinco arquivos na solicitação");
+
+        }
+
+        System.out.println("upload finished cópias" + quantidadecopias);
+
+    }
+
+    public String prepararDownload(ActionEvent submit) throws FileNotFoundException {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+        String dataDownload = params.get("linkFile");
+
+        System.out.println("Preparando arquivo para download: " + dataDownload);
+
+        File down = new File(dataDownload);
+        InputStream input = new FileInputStream(down);
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        setDownload(new DefaultStreamedContent(input, externalContext.getMimeType(down.getName()), down.getName()));
+        System.out.println("Nome do arquivo de download: " + download.getName());
+        return "";
+
+    }
+
+    private String criarPasta() {
+        String pasta = PATH + "/" + usuario_logado;
+        try {
+            if (!new File(pasta).exists()) { // Verifica se o diretório existe.   
+                (new File(pasta)).mkdir();   // Cria o diretório   
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pasta;
+    }
+
+    public void removerDaLista(ActionEvent submit) {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+        String documento = params.get("idDocumento");
+        System.out.println("Tamanho da lista de documentos: " + listaDocumentos.size());
+
+        if (listaDocumentos.size() <= 1) {
+            listaDocumentos.clear();
+            try {
+                controllerDocumento.destroy(Integer.parseInt(documento));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            for (int i = 0; i < listaDocumentos.size(); i++) {
+                if (listaDocumentos.get(i).getIddocumento() == Integer.parseInt(documento)) {
+                    listaDocumentos.remove(i);
+                    try {
+                        controllerDocumento.destroy(listaDocumentos.get(i).getIddocumento());
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    public void alterarCopias(ActionEvent submit) {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+        String documento = params.get("idDocumento");
+        for (int i = 0; i < listaDocumentos.size(); i++) {
+            if (listaDocumentos.get(i).getIddocumento() == Integer.parseInt(documento)) {
+
+                try {
+                    controllerDocumento.edit(listaDocumentos.get(i));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, ""
+                            + "Numero de cópias alterado para: " + listaDocumentos.get(i).getQuantidadecopias(), ""));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
+    
+    public void alterarQuantidadePaginas(ActionEvent submit) {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+        String documento = params.get("idDocumento");
+        for (int i = 0; i < listaDocumentos.size(); i++) {
+            if (listaDocumentos.get(i).getIddocumento() == Integer.parseInt(documento)) {
+                try {
+                    controllerDocumento.edit(listaDocumentos.get(i));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, ""
+                            + "Numero de páginas alterado para: " + listaDocumentos.get(i).getQuantidadepaginas(), ""));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public List<Documento> getListaDocumentos() {
+        return listaDocumentos;
+    }
+
+    public void setListaDocumentos(List<Documento> listaDocumentos) {
+        this.listaDocumentos = listaDocumentos;
+    }
+
+    public int getQuantidadecopias() {
+        return quantidadecopias;
+    }
+
+    public void setQuantidadecopias(int quantidadecopias) {
+        this.quantidadecopias = quantidadecopias;
+    }
+
+    public InputText getInput() {
+        return input;
+    }
+
+    public void setInput(InputText input) {
+        this.input = input;
+    }
+
+    public DefaultStreamedContent getDownload() throws Exception {
+        return download;
+    }
+
+    public void setDownload(DefaultStreamedContent download) {
+        this.download = download;
+    }
+
+    public String getParametro() {
+        return parametro;
+    }
+
+    public void setParametro(String parametro) {
+        this.parametro = parametro;
+    }
+
+    public String getPATH() {
+        return PATH;
+    }
+
+    public void setPATH(String PATH) {
+        this.PATH = PATH;
+    }
+
+    public DocumentoJpaController getControllerDocumento() {
+        return controllerDocumento;
+    }
+
+    public void setControllerDocumento(DocumentoJpaController controllerDocumento) {
+        this.controllerDocumento = controllerDocumento;
+    }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
+}

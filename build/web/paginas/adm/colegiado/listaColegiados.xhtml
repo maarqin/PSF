@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:jsf="http://java.sun.com/jsf"   
+      xmlns:h="http://xmlns.jcp.org/jsf/html"   
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"     
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:decorate template="/layout/adm.xhtml">
+        <ui:define name="content">
+            <p:outputLabel value="Lista de colegiados" style="font-size: 2em; margin: 35%; width: 100%"/>
+            <div style="margin:2% 0%">
+                <p:dataTable id="tabela" emptyMessage="Nenhum colegiado cadastrado" 
+                             value="#{colegiadoBean.listaColegiados()}" var="colegiado" 
+                             paginator="true" rows="10" style="font-size: 15px">
+                    <p:column headerText="ID " filterBy="#{colegiado.idcolegiado}">
+                        <h:outputText value="#{colegiado.idcolegiado}" style="word-wrap:break-word;"/>   </p:column>
+                    <p:column headerText="Nome" filterBy="#{colegiado.nome}">
+                        <h:outputText value="#{colegiado.nome}"/>   </p:column>
+                    <p:column headerText="Quantidade de cursos " filterBy="#{colegiado.quantidadecursos}"><h:outputText value="#{colegiado.quantidadecursos}"/>   </p:column>
+                    <p:column headerText="Estado " filterBy="#{colegiado.estado}"><h:outputText value="#{colegiado.estado}"/>   </p:column>
+                    <p:column headerText="Ação">
+                        <p:commandButton update=":form:dialog" action="#{colegiadoBean.setC(colegiado)}" oncomplete="PF('dlg1').show();" icon="ui-icon-pencil"/>
+                        <p:commandButton actionListener="#{colegiadoBean.deleteColegiado(colegiado.idcolegiado)}" update=":form:tabela" icon="ui-icon-trash">
+                            <p:confirm header="Confirmação" message="Você tem certeza que deseja deletar um colegiado?" icon="ui-icon-alert" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+
+                <p:dialog id="dialog" header="Alterar Colegiado" widgetVar="dlg1"  >
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Nome: "/> <h:inputText value="#{colegiadoBean.c.nome}"/>
+                        <h:outputText value="Quantidade de cursos: "/> <h:inputText value="#{colegiadoBean.c.quantidadecursos}"/>
+                        <p:outputLabel for="estado" value="Estado:" />
+                        <p:selectOneRadio id="estado" value="#{colegiadoBean.c.estado}">
+                            <f:selectItem itemLabel="Ativo" itemValue="Ativo" />
+                            <f:selectItem itemLabel="Inativo" itemValue="Inativo" />
+                        </p:selectOneRadio>
+                        <p:commandButton value="Alterar" actionListener="#{colegiadoBean.editarColegiado(submit)}" update=":form:tabela" oncomplete="PF('dlg1').hide();"/>
+                        <p:commandButton value="Cancelar" oncomplete="PF('dlg1').hide();"/>
+                    </h:panelGrid>
+                </p:dialog>
+            </div>
+        </ui:define>
+    </ui:decorate>
+</html>
+

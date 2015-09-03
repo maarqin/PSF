@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:jsf="http://java.sun.com/jsf"   
+      xmlns:h="http://xmlns.jcp.org/jsf/html"   
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"     
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:decorate template="/layout/adm.xhtml">
+        <ui:define name="content">
+            <p:outputLabel value="Novo Usuário" style="font-size: 2em; margin: 35%; width: 100%"/>
+            <h:panelGrid columns="2" style="width: 98%" border="">
+
+                <p:outputLabel for="nome" value="Nome: " style="width: 10%;"/>
+
+                <p:inputText id="nome" value="#{cadastrosBean.nome}" required="true" placeholder="Digite aqui o seu nome." 
+                             requiredMessage="Campo nome obrigatório." style="width: 100%"
+                             ></p:inputText>
+
+                <p:outputLabel for="email" value="Email: " style="width: 100%"/>
+                <p:inputText id="email"  
+                             label="usuario" value="#{cadastrosBean.email}" required="true" placeholder="Digite aqui o seu email." 
+                             validatorMessage="Email fora do padrão." requiredMessage="Campo email obrigatório."
+                             style="width: 100%">
+                    <p:tooltip for="email" showEvent="focus" hideEvent="blur"  />
+                    <f:validateRegex for="email" 
+                                     pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                </p:inputText>
+
+                <p:outputLabel for="matricula" value="Matrícula: "/>
+                <p:inputText id="matricula"  requiredMessage="Matrícula obrigatória." 
+                             value="#{cadastrosBean.matricula}" validatorMessage="Matrícula inválida." 
+                             placeholder="Digite aqui a sua matrícula." required="true" 
+                             onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" maxlength="9" style="width: 100%">
+                    <p:tooltip for="matricula" showEvent="focus" hideEvent="blur"/>
+                </p:inputText>
+
+
+                <p:outputLabel for="senha" value="Senha: "/>
+                <p:password id="senha"  label="Senha" feedback="false"  promptLabel="Digite uma senha" 
+                            match="confirmar_senha" value="#{cadastrosBean.senha}"
+                            required="true" requiredMessage="Senha inválida."  placeholder="Digite aqui a sua senha." validatorMessage="Campo senha obrigatório." style="width: 100%">
+                    <f:validateLength for="senha" minimum="3" maximum="16"/>
+                </p:password>
+
+                <p:outputLabel for="confirmar_senha" value="Confirmar senha:"/>
+                <p:password id="confirmar_senha"  label="confirma_senha" feedback="false" 
+                            promptLabel="Digite senha novamente"
+                            value="#{cadastrosBean.senha}"
+                            required="true" requiredMessage="Campo confirmar senha inválido." placeholder="Digite a senha novamente." validatorMessage="Campo confirmar senha obrigatório." style="width: 100%">
+                    <f:validateLength for="confirmar_senha" maximum="16" minimum="3"/>
+                </p:password>
+
+                <p:outputLabel for="options" value="Tipo de conta:" />
+                <p:selectOneRadio id="options" value="#{cadastrosBean.tipo}" required="true" requiredMessage="Selecione um tipo de conta." >
+                    <f:selectItem itemLabel="Administrador" itemValue="Administrador" itemEscaped="true" />
+                    <f:selectItem itemLabel="Funcionário" itemValue="Funcionario" itemEscaped="true"  />                    
+                    <f:selectItem itemLabel="Professor" itemValue="Professor" itemEscaped="true"  />
+                </p:selectOneRadio>
+
+                <p:commandButton styleClass="btnCadastrar" id="submit" value="Cadastrar" action="#{cadastrosBean.cadastrarUsuario(submit)}" update="@all"/>
+                <p:commandButton action="/paginas/adm/usuario/NovoUsuario.xhtml?faces-redirect=true" value="Cancelar cadastro" update="messages" ajax="true" immediate="true"/>
+            </h:panelGrid>
+        </ui:define>
+    </ui:decorate>
+</html>
+

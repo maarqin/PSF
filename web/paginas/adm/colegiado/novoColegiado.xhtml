@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:jsf="http://java.sun.com/jsf"   
+      xmlns:h="http://xmlns.jcp.org/jsf/html"   
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"     
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:decorate template="/layout/adm.xhtml">
+        <ui:define name="content">
+            <p:outputLabel value="Novo Colegiado" style="font-size: 2em; margin: 35%; width: 100%"/>
+            <h:form id="cadastro">
+                <!--<p:growl id="messages" autoUpdate="true" showDetail="true"/>-->
+                <!--                <p:panel id="novoColegiadoPanel" style="margin-bottom:20px">-->
+                <!--<div style="margin: 2%; width: 100%">-->
+
+                    <!--<center>-->
+                    <br/>
+                    <br/>
+                    
+                    
+                        <p:panelGrid columns="2" style="width: 95%">
+                            <p:outputLabel value="Nome:"/> 
+                            <p:inputText value="#{colegiadoBean.nome}" placeholder="Digite aqui o nome." style="width: 98%" required="true" requiredMessage="Campo nome obrigatório."/>
+                            <p:outputLabel value="Quantidade de cursos:"/> 
+                            <p:inputText value="#{colegiadoBean.quantidadecursos}" placeholder="Digite aqui a quantidade de cursos." style="width: 98%" required="true" requiredMessage="Campo quantidade de cursos obrigatório."/>
+                        </p:panelGrid>  
+
+                    <!--</center>-->
+                <!--</div>-->
+                <!--                </p:panel>-->
+                <p:commandButton value="Cadastrar Colegiado" update="@all" action="#{colegiadoBean.novoColegiado(submit)}" style="margin: 2%"/>
+                <p:commandButton action="/paginas/adm/colegiado/novoColegiado.xhtml?faces-redirect=true" value="Cancelar cadastro" ajax="true" immediate="true"/>
+            </h:form>
+        </ui:define>
+    </ui:decorate>
+</html>

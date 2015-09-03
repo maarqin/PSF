@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:jsf="http://java.sun.com/jsf"   
+      xmlns:h="http://xmlns.jcp.org/jsf/html"   
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"     
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:decorate template="/layout/adm.xhtml">
+        <ui:define name="content">
+            <p:outputLabel value="Fotocópias por professor do colegiado: #{documentoBean.nomeColegiadoSelecionado} " 
+                           style="font-size: 2em; margin: 0%; width: 100%"/>
+            <div style="margin:2% 0%">
+                <p:dataTable id="tabela" emptyMessage="Nenhum usuário cadastrado" 
+                             value="#{documentoBean.listaUsuariosSelecionados()}" var="paginaInfo" 
+                             paginator="true" rows="10" style="font-size: 15px">
+                    <p:column headerText="Nome" filterBy="#{paginaInfo.nomeProfessor}">
+                        <h:outputText value="#{paginaInfo.nomeProfessor}" style="word-wrap:break-word;"/></p:column>
+                    <p:column headerText="Email" filterBy="#{paginaInfo.emailProfessor}">
+                        <h:outputText value="#{paginaInfo.emailProfessor}" style="word-wrap:break-word;"/></p:column>
+                    <p:column headerText="Quantidade de páginas" filterBy="#{paginaInfo.qtPaginas}">
+                        <h:outputText value="#{paginaInfo.qtTotal}"/></p:column>
+                </p:dataTable>
+            </div>
+            <p:outputLabel value="Total de páginas deste colegiado: #{documentoBean.paginasPorColegiado()}"/>
+        </ui:define>
+    </ui:decorate>
+</html>

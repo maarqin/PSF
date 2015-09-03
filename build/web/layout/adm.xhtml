@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:jsf="http://java.sun.com/jsf"   
+      xmlns:h="http://xmlns.jcp.org/jsf/html"   
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"     
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Administrador</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h:form id="form" enctype="multipart/form-data" >
+            <p:growl id="messages" autoUpdate="true"/>
+            <p:layout>
+                <p:layoutUnit position="west" resizable="true" minSize="250">
+                    <center>
+                        <p:outputLabel value="MENU" style=""/>
+                        <p:menu toggleable="false">
+                            <p:submenu label="Usuários" style="background: #cccccc">
+                                <p:menuitem value="Lista de Usuários" outcome="/paginas/adm/usuario/ListaUsuarios.xhtml" icon="ui-icon-person" />
+                                <p:menuitem value="Cadastrar Usuário" outcome="/paginas/adm/usuario/NovoUsuario.xhtml" icon="ui-icon-person" />
+                            </p:submenu>    
+                            <p:submenu label="Colegiados" style="background: #cccccc">
+                                <p:menuitem value="Lista de Colegiados" outcome="/paginas/adm/colegiado/listaColegiados.xhtml" icon="ui-icon-bookmark" />
+                                <p:menuitem value="Cadastrar Colegiado" outcome="/paginas/adm/colegiado/novoColegiado.xhtml" icon="ui-icon-bookmark" />
+                            </p:submenu>
+                            <!--                            <p:submenu label="Professores" style="background: #cccccc">
+                                                            <p:menuitem value="Lista de Professores" outcome="/paginas/adm/professor/ListaProfessores.xhtml" update="messages" icon="ui-icon-disk" />
+                                                            <p:menuitem value="Novo professor" outcome="/paginas/professor/novoProfessor.xhtml" update="messages" icon="ui-icon-disk" />
+                                                        </p:submenu>-->
+                            <p:submenu label="Solicitações" style="background: #cccccc">
+                                <p:menuitem value="Lista de Solicitações" outcome="/paginas/adm/solicitacao/ListaSolicitacoes.xhtml" update="messages" icon="ui-icon-pin-w" />
+                                <p:menuitem value="Nova Solicitação" outcome="/paginas/adm/solicitacao/NovaSolicitacao.xhtml" update="messages" icon="ui-icon-pin-w" />
+                                <p:menuitem value="Verificar Solicitação" outcome="/paginas/adm/solicitacao/VerificarSolicitacaoADM.xhtml" update="messages" icon="ui-icon-pin-w" />
+                            </p:submenu>
+                            <p:submenu>
+                                <p:menuitem value="Fotocópias" outcome="/paginas/adm/fotocopia/fotocopiasColegiado.xhtml" update="messages" icon="ui-icon-search" />
+                            </p:submenu>
+                            <p:submenu>
+                                <p:menuitem value="Ajuda" outcome="/paginas/adm/AjudaAdm.xhtml" icon="ui-icon-help" />
+                            </p:submenu>
+                            <p:submenu>
+                                <p:menuitem value="Sair" action="#{sessionBean.logOut()}" immediate="true" icon="ui-icon-home"/>
+                            </p:submenu>
+                        </p:menu>
+                    </center>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center" minSize="600">
+                    <ui:insert name="content">
+                        <p:outputLabel value="Fotocópias por colegiado" style="font-size: 100%; margin: 25%"/>
+                        <div style="margin:2% 0%">
+                            <p:dataTable id="tabela" emptyMessage="Nenhum colegiado cadastrado" 
+                                         value="#{colegiadoBean.listaColegiados()}" var="colegiado" 
+                                         paginator="true" rows="10" style="font-size: 15px">
+                                <p:column headerText="Id" filterBy="#{colegiado.idcolegiado}"><h:outputText value="#{colegiado.idcolegiado}"/>   </p:column>
+                                <p:column headerText="Nome" filterBy="#{colegiado.nome}"> <h:outputText value="#{colegiado.nome}"/> </p:column>
+                                <p:column headerText="Quantidade de cursos" filterBy="#{colegiado.quantidadecursos}"><h:outputText value="#{colegiado.quantidadecursos}"/>  </p:column>
+                                <p:column headerText="Estado" filterBy="#{colegiado.estado}"><h:outputText value="#{colegiado.estado}"/>  </p:column>
+                                <p:column headerText="Ação">
+                                    <p:commandButton action="#{colegiadoBean.irProfessorPage(colegiado.idcolegiado, colegiado.nome)}" icon="ui-icon-search"/>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </ui:insert>
+
+                    <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+                    <p:dialog widgetVar="statusDialog" modal="false" draggable="false" closable="false" resizable="false" showHeader="false">
+                        <img src="../../images/barra.gif"/>
+                    </p:dialog>
+                </p:layoutUnit>
+            </p:layout>
+        </h:form>
+    </h:body>
+</html>

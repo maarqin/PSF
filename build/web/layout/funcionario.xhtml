@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:jsf="http://java.sun.com/jsf"   
+      xmlns:h="http://xmlns.jcp.org/jsf/html"   
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"     
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Funcionário</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    </h:head>
+    <h:body>
+        <h:form id="form" enctype="multipart/form-data" >
+            <p:growl id="messages" autoUpdate="true"/> 
+            <p:layout>
+                <p:layoutUnit position="west" resizable="true" minSize="250">
+                    <center>
+                        <p:outputLabel value="MENU" style=""/>
+                        <p:menu toggleable="false">
+                            <p:menuitem value="Lista de Solicitações" outcome="/paginas/func/ListaSolicitacoes.xhtml" icon="ui-icon-pin-w" />
+                            <p:menuitem value="Editar conta" outcome="/paginas/func/editarContaFunc.xhtml" icon="ui-icon-pencil" />
+                            <p:submenu>
+                                <p:menuitem value="Ajuda" outcome="/paginas/func/AjudaFunc.xhtml" icon="ui-icon-help" />
+                            </p:submenu>
+                            <p:submenu>
+                                <p:menuitem value="Sair" action="#{sessionBean.logOut()}" immediate="true" icon="ui-icon-home"/>
+                            </p:submenu>
+                        </p:menu>
+                    </center>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center" minSize="600">
+                    <ui:insert name="content">
+
+                        <p:outputLabel value="Lista de Solicitações" style="font-size: 2em; margin: 25%; width: 100%"/>
+                        <p:dataTable id="tabela" emptyMessage="Nenhuma solicitação" value="#{solicitacaoDocumentoBean.listaSolicitacoes()}" 
+                                     var="solicitacao" paginator="true" rows="10" style="font-size: 80%">
+                            <p:column headerText="Nome" filterBy="#{solicitacao.usuarioIdusuario.nome}">
+                                <h:outputText value="#{solicitacao.usuarioIdusuario.nome}" style="word-wrap:break-word;"/>  </p:column>
+
+                            <p:column headerText="Protocolo" filterBy="#{solicitacao.numprotocolo}">
+                                <h:outputText value="#{solicitacao.numprotocolo}"/>  </p:column>
+
+                            <p:column headerText="Data aplicação" filterBy="#{solicitacao.dataaplicacao}">
+                                <h:outputText value="#{solicitacao.dataaplicacao}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText >
+                            </p:column>
+
+                            <p:column headerText="Período aplicação" filterBy="#{solicitacao.periodoaplicacao}">
+                                <h:outputText value="#{solicitacao.periodoaplicacao}"/>  </p:column>
+
+                            <p:column headerText="Estado" filterBy="#{solicitacao.estado}">
+                                <h:outputText value="#{solicitacao.estado}"/>  </p:column>
+
+                            <p:column headerText="Atendente" filterBy="#{solicitacaoDocumentoBean.retornaAtendente(solicitacao)}">
+                                <h:outputText value="#{solicitacaoDocumentoBean.retornaAtendente(solicitacao)}" style="word-wrap:break-word;"/>  </p:column>
+
+                            <p:column headerText="Ação">
+                                <p:commandButton  action="#{solicitacaoDocumentoBean.setSolicitacaoDetalhada(solicitacao)}"
+                                                  update=":form:dialog" oncomplete="PF('dlg1').show();" icon="ui-icon-search"/>
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:dialog id="dialog" header="Solicitação detalhada" widgetVar="dlg1" >
+                            <h:panelGrid columns="1">
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel value="Data de criação:"/> <p:outputLabel value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.datacriacao}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                    <p:outputLabel value="Nome professor: "/> <p:outputLabel value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.usuarioIdusuario.nome}"/>
+                                    <p:outputLabel value="Email professor:"/> <p:outputLabel value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.usuarioIdusuario.email}"/>
+                                    <p:outputLabel value="Colegiado:"/> <p:outputLabel value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.colegiadoIdcolegiado.nome}"/>
+                                    <p:outputLabel value="Data de aplicação:" style="color: red"/> <p:outputLabel value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.dataaplicacao}" style="color: red">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                    <p:outputLabel value="Período de aplicação:"/> <p:outputLabel value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.periodoaplicacao}"/>
+                                    <p:outputLabel value="Atendente:"/> <p:outputLabel value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.atendente}"/>
+                                    <p:outputLabel value="Estado:" style="color: red"/> <p:outputLabel value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.estado}" style="color: red"/>
+                                    <p:outputLabel value="Frente e verso: " style="color: red"/> <p:outputLabel value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.frenteVerso}" style="color: red"/>
+                                    <p:outputLabel value="Motivo da recusa: "/> <p:outputLabel value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.motivorecusa}"/>
+                                    <!--<p:commandButton value="Mudar estado" actionListener="# {solicitacaoDocumentoBean.updateSolicitacaoDetalhada()}" update=":form:tabela" oncomplete="PF('dlg1').hide();"/>-->
+                                </h:panelGrid>
+                                <p:separator style="width: 100%"/>
+
+                                <p:dataTable id="docs" var="doc"  value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.documentoList}">
+                                    <p:column headerText="Nome do Arquivo">
+                                        <h:outputText value="#{doc.nomedocumento}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Nº de cópias">
+                                        <h:outputText value="#{doc.quantidadecopias}" />
+                                    </p:column>
+
+                                    <p:column>
+                                        <p:commandButton style="font-size: 13px" value="Baixar" ajax="false" actionListener="#{solicitacaoDocumentoBean.prepararDownload(submit)}"  icon="ui-icon-arrowthick-1-s">
+                                            <p:fileDownload  value="#{solicitacaoDocumentoBean.dataDownload}" />
+                                            <f:param name="linkFile" value="#{doc.enderecodocumento}"/>
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+
+                                <h:panelGrid columns="2">
+                                    <p:commandButton value="Mudar estado" update=":form:dialog2" oncomplete="PF('dlg1').hide(); PF('dlg2').show();"/>
+                                    <p:commandButton value="Cancelar" oncomplete="PF('dlg1').hide();"/>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:dialog>
+
+                        <p:dialog id="dialog2" header="Alterar estado" widgetVar="dlg2">
+                            <h:outputLabel for="estado" value="Novo estado: "/>
+                            <p:selectOneMenu id="estado" value="#{solicitacaoDocumentoBean.estadoSolicitacaoDetalhada}" onchange="textoInput()">
+                                <f:selectItem itemLabel="Selecione o estado" itemValue=""/>
+                                <f:selectItem itemLabel="Pronto" itemValue="Pronto" />
+                                <f:selectItem itemLabel="Pendente" itemValue="Pendente" />
+                                <f:selectItem itemLabel="Recusado" itemValue="Recusado" />
+                            </p:selectOneMenu>
+
+                            <br/>
+
+                            <div id="motivoRecusa" class="toogle" style="display: none;">
+                                <p:inputTextarea style="width: 100% ; height: 100px" value="#{solicitacaoDocumentoBean.motivoRecusa}" placeholder="Qual é o motivo da recusa?" maxlength="100"></p:inputTextarea> 
+                            </div>
+
+                            <!--<p:commandButton value="Alterar" action="# {solicitacaoDocumentoBean.updateSolicitacaoDetalhada()}" update=":form:tabela" onsuccess="if(# {myBean.evenNumber}){dlg1.show();}else{dlg1.hide();}/>-->
+                            <p:commandButton value="Alterar"  onclick="#{solicitacaoDocumentoBean.mensagemEmail()}"  action="#{solicitacaoDocumentoBean.updateSolicitacaoDetalhada()}" update=":form:tabela" oncomplete="PF('dlg2').hide();"/>
+                            <p:commandButton value="Cancelar" oncomplete="PF('dlg2').hide();"/>
+                        </p:dialog>
+
+
+
+                        <script>
+                                $('#form\\:estado').on('change', function () {
+                                    alert("asdasda");
+                                })
+
+                                function textoInput() {
+                                    var estado = $("select[id='form:estado_input'] option:selected").val();
+
+                                    //                    console.log($('#motivoRecusa input').val());
+                                    if (estado == 'Recusado') {
+                                        $('.toogle').css('display', 'block');
+                                    } else {
+                                        $('.toogle').css('display', 'none');
+                                    }
+
+                                }
+                                ;
+                        </script>
+                    </ui:insert>
+                    <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+                    <p:dialog widgetVar="statusDialog" modal="false" draggable="false" closable="false" resizable="false" showHeader="false">
+                        <img src="../../images/barra.gif"/>
+                    </p:dialog>
+                </p:layoutUnit>
+            </p:layout>
+        </h:form>
+    </h:body>
+</html>

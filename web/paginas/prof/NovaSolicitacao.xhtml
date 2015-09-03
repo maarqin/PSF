@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:jsf="http://java.sun.com/jsf"   
+      xmlns:h="http://xmlns.jcp.org/jsf/html"   
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"     
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:decorate template="/layout/professor.xhtml">
+        <ui:define name="content">
+            <p:outputLabel value="Nova Solicitação" style="font-size: 2em; margin: 30%; width: 100%"/>
+            <!--            <div>-->
+            <!--            <p:panel id="novaSolicitacaoPanel" style="margin-bottom:20px">-->
+
+            <!--            <h:panelGrid columns="1" style="margin: 2%">-->
+            <p:panel style="margin: 2%;">
+                <p:clock pattern="'Criado em: 'dd/MM/yyyy' às 'HH:mm:ss"/>
+
+                <p:panelGrid  columns="2" style="margin-bottom: 1%" >
+                    <p:outputLabel for="calendar" value="Data de aplicação:"/>
+                    <p:calendar id="calendar"  pattern="dd/MM/yyyy" mask="true" placeholder="Insira a data de aplicação." 
+                                required="true" value="#{solicitacaoDocumentoBean.solicitacao.dataaplicacao}" locale="pt"/>
+
+                    <p:outputLabel for="opPeriodo" value="Período de aplicação: "/>
+                    <p:selectOneRadio id="opPeriodo" 
+                                      value="#{solicitacaoDocumentoBean.solicitacao.periodoaplicacao}" 
+                                      required="true">
+
+                        <f:selectItem itemLabel="Manhã" itemValue="Manhã" itemEscaped="true"/>
+                        <f:selectItem itemLabel="Tarde" itemValue="Tarde" itemEscaped="true"/>                    
+                        <f:selectItem itemLabel="Noite" itemValue="Noite" itemEscaped="true"/>
+                    </p:selectOneRadio>
+
+                    <h:outputLabel for="colegiado" value="Colegiado: "/>
+                    <p:selectOneMenu id="colegiado" value="#{solicitacaoDocumentoBean.colegiado.idcolegiado}" required="true">
+                        <f:selectItem itemLabel="Selecione o colegiado" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{solicitacaoDocumentoBean.listaColegiados}" var="colegiado" itemLabel="#{colegiado.nome}" itemValue="#{colegiado.idcolegiado}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputText value="Frente e verso: " />
+                    <p:selectBooleanCheckbox value="#{solicitacaoDocumentoBean.frenteVerso}" />
+                </p:panelGrid>
+
+                <p:fileUpload id="upload" fileUploadListener="#{solicitacaoDocumentoBean.upload}" auto="false" 
+                              label="Adicionar arquivo"  cancelLabel="Cancelar" mode="advanced" update=":form:tableInicial" multiple="true" allowTypes="/(\.|\/)(pdf)$/">
+                </p:fileUpload>
+
+                <p:dataTable id="tableInicial" emptyMessage="Não há documentos baixados" rows="5" var="doc" value="#{solicitacaoDocumentoBean.listaDocumentos}">
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{doc.nomedocumento}"/>
+                    </p:column>
+                    <p:column headerText="Cópias">
+                        <Center>
+                            <h:inputText value="#{doc.quantidadecopias}" style="width: 80%"/>
+                        </Center>
+                    </p:column>
+
+                    <p:column headerText="Páginas por arquivo">
+                        <center>
+                            <h:outputLabel value = "#{doc.quantidadepaginas}" style="width: 50%"/>
+                            <!--<h:inputText value="# {doc.quantidadepaginas}" disabled="true" style="width: 50%"/>-->
+                        </center>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+            <!--                        <div>-->
+
+            <!--                        </div>-->
+            <!--            </h:panelGrid>-->
+            <!--            </p:panel>-->
+            <p:commandButton action="#{solicitacaoDocumentoBean.novaSolicitacao()}" value="Nova solicitação" update="@all" ajax="true"/>
+            <p:commandButton action="/paginas/prof/NovaSolicitacao.xhtml?faces-redirect=true" value="Cancelar solicitação" update="messages" ajax="true" immediate="true"/>
+            <!--            </div>-->
+
+            <script>
+                PrimeFaces.locales['pt'] = {
+                    closeText: 'Fechar',
+                    prevText: 'Anterior',
+                    nextText: 'Próximo',
+                    currentText: 'Começo',
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+                    weekHeader: 'Semana',
+                    firstDay: 0,
+                    isRTL: false,
+                    showMonthAfterYear: false,
+                    yearSuffix: '',
+                    timeOnlyTitle: 'Só Horas',
+                    timeText: 'Tempo',
+                    hourText: 'Hora',
+                    minuteText: 'Minuto',
+                    secondText: 'Segundo',
+                    ampm: false,
+                    month: 'Mês',
+                    week: 'Semana',
+                    day: 'Dia', allDayText: 'Todo o Dia'
+                };
+            </script> 
+        </ui:define>
+    </ui:decorate>
+</html>

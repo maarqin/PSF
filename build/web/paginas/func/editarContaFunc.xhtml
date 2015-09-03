@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:jsf="http://java.sun.com/jsf"   
+      xmlns:h="http://xmlns.jcp.org/jsf/html"   
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"     
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:decorate template="/layout/funcionario.xhtml">
+        <ui:define name="content">
+            <p:outputLabel value="Editar conta" style="font-size: 2em; margin: 35%; width: 100%"/>
+            <h:panelGrid columns="2" style="margin: 5% 25%">
+               <p:outputLabel for="email" value="Email: "/>
+                <p:inputText id="email"  
+                             label="usuario" value="#{cadastrosBean.email2}" required="true" placeholder="Digite aqui o seu email." validatorMessage="Email fora do padrão." requiredMessage="Campo email obrigatório.">
+                    <p:tooltip for="email" showEvent="focus" hideEvent="blur"  />
+                    <f:validateRegex for="email" 
+                                     pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                </p:inputText>
+                <p:outputLabel for="senha" value="Senha: "/>
+                <p:password id="senha"  label="Senha" feedback="false"  promptLabel="Digite uma senha" 
+                            match="confirmar_senha" value="#{cadastrosBean.senha}"
+                            required="true" requiredMessage="Senha inválida."  placeholder="Digite aqui a sua senha." validatorMessage="Os campos de senha estão preenchidos incorretamente.">
+                    <f:validateLength for="senha" minimum="3" maximum="16"/>
+                </p:password>
+                <p:outputLabel for="confirmar_senha" value="Confirmar senha:"/>
+                <p:password id="confirmar_senha"  label="confirma_senha" feedback="false" 
+                            promptLabel="Digite senha novamente"
+                            value="#{cadastrosBean.senha2}"
+                            required="true" requiredMessage="Campo confirmar senha inválido." placeholder="Digite a senha novamente." validatorMessage="Campo confirmar senha obrigatório.">
+                    <f:validateLength for="confirmar_senha" maximum="16" minimum="3"/>
+                </p:password>
+                <p:commandButton styleClass="btnEditar" id="submit" value="Editar conta" action="#{cadastrosBean.alterarUsuario(submit)}" update="@all"/>
+                <p:commandButton action="/paginas/func/editarContaFunc.xhtml?faces-redirect=true" value="Cancelar" update="messages" ajax="true" immediate="true"/>           
+            </h:panelGrid>
+        </ui:define>
+    </ui:decorate>
+</html>
+

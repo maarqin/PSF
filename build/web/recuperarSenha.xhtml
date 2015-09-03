@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Recuperar Senha</title>
+    </h:head>
+    <h:body>
+        <h:form id="login" style="margin-left: 39%; margin-top: 20%">
+            <p:growl id="messages" autoUpdate="true"/>
+            <p:outputLabel value="Esqueceu sua senha? Insira o seu email."></p:outputLabel>
+            <br/>
+            
+                <p:inputText id="email" required="true" value="#{sessionBean.email}"
+                             requiredMessage="Insira o email."
+                             validatorMessage="Email Invalido." placeholder="Digite aqui o seu email.">
+                    <f:validateRegex
+                        pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
+                        />
+                </p:inputText>
+            <br/>
+                <p:commandButton value="Enviar" action="#{sessionBean.esqueceuSenha()}" />
+                <p:commandButton value="Cancelar" action="/index.xhtml?faces-redirect=true" immediate="true"/>
+        </h:form>
+    </h:body>
+</html>
