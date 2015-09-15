@@ -1,11 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:jsf="http://java.sun.com/jsf"   
       xmlns:h="http://xmlns.jcp.org/jsf/html"   
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"     
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:decorate template="/layout/funcionario.xhtml">
@@ -57,7 +55,6 @@
                         <p:outputLabel value="Estado:" style="color: red"/> <p:outputLabel value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.estado}" style="color: red"/>
                         <p:outputLabel value="Frente e verso: " style="color: red"/> <p:outputLabel value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.frenteVerso}" style="color: red"/>
                         <p:outputLabel value="Motivo da recusa: "/> <p:outputLabel value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.motivorecusa}"/>
-                        <!--<p:commandButton value="Mudar estado" actionListener="# {solicitacaoDocumentoBean.updateSolicitacaoDetalhada()}" update=":form:tabela" oncomplete="PF('dlg1').hide();"/>-->
                     </h:panelGrid>
                     <p:separator style="width: 100%"/>
 
@@ -104,26 +101,19 @@
                 <p:commandButton value="Alterar"  onclick="#{solicitacaoDocumentoBean.mensagemEmail()}"  action="#{solicitacaoDocumentoBean.updateSolicitacaoDetalhada()}" update=":form:tabela" oncomplete="PF('dlg2').hide();"/>
                 <p:commandButton value="Cancelar" oncomplete="PF('dlg2').hide();"/>
             </p:dialog>
-            
 
 
-            <script>
+
+            <script type="text/javascript">
                     $('#form\\:estado').on('change', function () {
                         alert("asdasda");
-                    })
+                    });
 
                     function textoInput() {
                         var estado = $("select[id='form:estado_input'] option:selected").val();
 
-//                    console.log($('#motivoRecusa input').val());
-                        if (estado == 'Recusado') {
-                            $('.toogle').css('display', 'block');
-                        } else {
-                            $('.toogle').css('display', 'none');
-                        }
-
+                        $('.toogle').css('display', (estado == 'Recusado') ? 'block' : 'none');
                     }
-                    ;
             </script>
         </ui:define>
     </ui:decorate>

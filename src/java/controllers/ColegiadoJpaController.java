@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controllers;
 
 import controllers.exceptions.IllegalOrphanException;
@@ -48,6 +43,10 @@ public class ColegiadoJpaController implements Serializable {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Colegiado> selectAll() {
         EntityManager em = getEntityManager();
         Query query = em.createQuery("SELECT u FROM Colegiado u");
@@ -55,6 +54,10 @@ public class ColegiadoJpaController implements Serializable {
         return qlista;
     }
 
+    /**
+     *
+     * @param colegiado
+     */
     public void create(Colegiado colegiado) {
         if (colegiado.getColegiadoHasUsuarioList() == null) {
             colegiado.setColegiadoHasUsuarioList(new ArrayList<ColegiadoHasUsuario>());
@@ -105,6 +108,13 @@ public class ColegiadoJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param colegiado
+     * @throws IllegalOrphanException
+     * @throws NonexistentEntityException
+     * @throws Exception
+     */
     public void edit(Colegiado colegiado) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
@@ -189,6 +199,12 @@ public class ColegiadoJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @throws IllegalOrphanException
+     * @throws NonexistentEntityException
+     */
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
@@ -228,10 +244,20 @@ public class ColegiadoJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Colegiado> findColegiadoEntities() {
         return findColegiadoEntities(true, -1, -1);
     }
 
+    /**
+     *
+     * @param maxResults
+     * @param firstResult
+     * @return
+     */
     public List<Colegiado> findColegiadoEntities(int maxResults, int firstResult) {
         return findColegiadoEntities(false, maxResults, firstResult);
     }
@@ -252,6 +278,11 @@ public class ColegiadoJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Colegiado findColegiado(Integer id) {
         EntityManager em = getEntityManager();
         try {
@@ -261,6 +292,10 @@ public class ColegiadoJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int getColegiadoCount() {
         EntityManager em = getEntityManager();
         try {

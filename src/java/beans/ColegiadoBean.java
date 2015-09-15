@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans;
 
 import controllers.ColegiadoJpaController;
@@ -51,18 +46,34 @@ public class ColegiadoBean {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public static List<Colegiado> getListaColegiados2() {
         return listaColegiados2;
     }
 
+    /**
+     *
+     * @param listaColegiados2
+     */
     public static void setListaColegiados2(List<Colegiado> listaColegiados2) {
         ColegiadoBean.listaColegiados2 = listaColegiados2;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<String> getListaNomesColegiados() {
         return listaNomesColegiados;
     }
 
+    /**
+     *
+     * @param listaNomesColegiados
+     */
     public void setListaNomesColegiados(List<String> listaNomesColegiados) {
         this.listaNomesColegiados = listaNomesColegiados;
     }
@@ -97,15 +108,11 @@ public class ColegiadoBean {
         return lista;
     }
 
-//    public void onRowSelect(SelectEvent event) {
-//        idColegiadoSelecionado = ((Colegiado) event.getObject()).getIdColegiado();
-//        FacesMessage msg = new FacesMessage("Colegiado selecionado" + ((Colegiado) event.getObject()).getNome(), ((Colegiado) event.getObject()).getNome());
-//        FacesContext.getCurrentInstance().addMessage(null, msg);
-//    }
-//    public void onRowUnselect(UnselectEvent event) {
-//        FacesMessage msg = new FacesMessage("Colegiado desselecionado", ((Colegiado) event.getObject()).getNome());
-//        FacesContext.getCurrentInstance().addMessage(null, msg);
-//    }
+    /**
+     *
+     * @param submit
+     * @return
+     */
     public String novoColegiado(Action submit) {
         c = new Colegiado(Integer.MIN_VALUE, nome, quantidadecursos, "Ativo");
 
@@ -115,15 +122,20 @@ public class ColegiadoBean {
             quantidadecursos = 0;
             c = new Colegiado(Integer.MIN_VALUE, nome, quantidadecursos, "Ativo");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Colegiado cadastrado.", ""));
-//            return "/paginas/adm/colegiado/novoColegiado.xhtml?faces-redirect=true";
+
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Esse colegiado já está cadastrado.", ""));
 
             e.printStackTrace();
         }
-        return "";
+        return null;
     }
 
+    /**
+     *
+     * @param idColegiado
+     * @return
+     */
     public String deleteColegiado(Integer idColegiado) {
         try {
             controllerColegiado.destroy(idColegiado);
@@ -135,6 +147,11 @@ public class ColegiadoBean {
         return null;
     }
 
+    /**
+     *
+     * @param submit
+     * @return
+     */
     public String editarColegiado(Action submit) {
         try {
             controllerColegiado.edit(c);

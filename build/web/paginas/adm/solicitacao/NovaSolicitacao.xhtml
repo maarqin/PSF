@@ -1,18 +1,14 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:jsf="http://java.sun.com/jsf"   
       xmlns:h="http://xmlns.jcp.org/jsf/html"   
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"     
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:decorate template="/layout/adm.xhtml">
         <ui:define name="content">
             <p:outputLabel value="Nova Solicitação" style="font-size: 2em; margin: 30%; width: 100%"/>
-            <!--            <div>-->
-            <!--            <p:panel id="novaSolicitacaoPanel" style="margin-bottom:20px">-->
 
             <h:panelGrid columns="1">
                 <p:panel>
@@ -20,13 +16,19 @@
 
                     <p:panelGrid  columns="2" style="margin-bottom: 1%;" >
                         <p:outputLabel for="calendar" value="Data de aplicação:"/>
-                        <p:calendar id="calendar"  pattern="dd/MM/yyyy" mask="true" placeholder="Insira a data de aplicação." 
-                                    required="true" value="#{solicitacaoDocumentoBean.solicitacao.dataaplicacao}" locale="pt" requiredMessage="Campo data de aplicação obrigatório."/>
+                        <p:calendar id="calendar" 
+                                    pattern="dd/MM/yyyy" mask="true" 
+                                    placeholder="Insira a data de aplicação." 
+                                    required="true" 
+                                    value="#{solicitacaoDocumentoBean.solicitacao.dataaplicacao}" 
+                                    locale="pt" 
+                                    requiredMessage="Campo data de aplicação obrigatório."/>
 
                         <p:outputLabel for="opPeriodo" value="Período de aplicação: "/>
                         <p:selectOneRadio id="opPeriodo" 
                                           value="#{solicitacaoDocumentoBean.solicitacao.periodoaplicacao}" 
-                                          required="true" requiredMessage="Campo período de aplicação obrigatório.">
+                                          required="true" 
+                                          requiredMessage="Campo período de aplicação obrigatório.">
 
                             <f:selectItem itemLabel="Manhã" itemValue="Manhã" itemEscaped="true"/>
                             <f:selectItem itemLabel="Tarde" itemValue="Tarde" itemEscaped="true"/>                    
@@ -34,7 +36,10 @@
                         </p:selectOneRadio>
 
                         <h:outputLabel for="colegiado" value="Colegiado: "/>
-                        <p:selectOneMenu id="colegiado" value="#{solicitacaoDocumentoBean.colegiado.idcolegiado}" required="true" requiredMessage="Campo colegiado obrigatório.">
+                        <p:selectOneMenu id="colegiado" 
+                                         value="#{solicitacaoDocumentoBean.colegiado.idcolegiado}" 
+                                         required="true"
+                                         requiredMessage="Campo colegiado obrigatório.">
                             <f:selectItem itemLabel="Selecione o colegiado" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{solicitacaoDocumentoBean.listaColegiados}" var="colegiado" itemLabel="#{colegiado.nome}" itemValue="#{colegiado.idcolegiado}"/>
                         </p:selectOneMenu>
@@ -66,7 +71,7 @@
                                 <!--<h:inputText value="# {doc.quantidadepaginas}" disabled="true" style="width: 50%"/>-->
                             </center>
                         </p:column>
-                        
+
                         <p:column headerText="Total de páginas">
                             <center>
                                 <h:outputLabel value="#{solicitacaoDocumentoBean.totalPaginas(doc)}" style="width: 50%"/>
@@ -78,12 +83,10 @@
 
                 </div>
             </h:panelGrid>
-            <!--            </p:panel>-->
             <p:commandButton action="#{solicitacaoDocumentoBean.novaSolicitacao()}" value="Nova solicitação" update="@all" ajax="true"/>
             <p:commandButton action="/paginas/adm/solicitacao/NovaSolicitacao.xhtml?faces-redirect=true" value="Cancelar solicitação" update="messages" ajax="true" immediate="true"/>
-            <!--            </div>-->
 
-            <script>
+            <script type="text/javascript">
                 PrimeFaces.locales['pt'] = {
                     closeText: 'Fechar',
                     prevText: 'Anterior',

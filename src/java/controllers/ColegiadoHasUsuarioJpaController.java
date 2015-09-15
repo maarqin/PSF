@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controllers;
 
 import controllers.exceptions.NonexistentEntityException;
@@ -47,13 +42,16 @@ public class ColegiadoHasUsuarioJpaController implements Serializable {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Usuario> listaUsuariosSelecionados() {
         EntityManager em = getEntityManager();
 
         try {
 
             Query query = em.createNamedQuery("ColegiadoHasUsuario.listaUsuariosSelecionados");
-//            query.setParameter("idColegiado", idColegiadoSelecionado);
             List<Usuario> lista = query.getResultList();
             return lista;
 
@@ -63,6 +61,10 @@ public class ColegiadoHasUsuarioJpaController implements Serializable {
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<ColegiadoHasUsuario> selectAll() {
         EntityManager em = getEntityManager();
         Query query = em.createQuery("SELECT u FROM ColegiadoHasUsuario u");
@@ -70,6 +72,11 @@ public class ColegiadoHasUsuarioJpaController implements Serializable {
         return qlista;
     }
 
+    /**
+     *
+     * @param u
+     * @return
+     */
     public List<Usuario> listaUsuariosFromColegiado(Usuario u) {
         List<Usuario> aux = new ArrayList();
         Query query = getEntityManager().createNamedQuery("ColegiadoHasUsuario.findByIdColegiadoHasUsuario")
@@ -78,6 +85,10 @@ public class ColegiadoHasUsuarioJpaController implements Serializable {
         return aux;
     }
 
+    /**
+     *
+     * @param colegiadoHasUsuario
+     */
     public void create(ColegiadoHasUsuario colegiadoHasUsuario) {
         EntityManager em = null;
         try {
@@ -110,6 +121,12 @@ public class ColegiadoHasUsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param colegiadoHasUsuario
+     * @throws NonexistentEntityException
+     * @throws Exception
+     */
     public void edit(ColegiadoHasUsuario colegiadoHasUsuario) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
@@ -162,6 +179,11 @@ public class ColegiadoHasUsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @throws NonexistentEntityException
+     */
     public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
@@ -193,10 +215,20 @@ public class ColegiadoHasUsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public List<ColegiadoHasUsuario> findColegiadoHasUsuarioEntities() {
         return findColegiadoHasUsuarioEntities(true, -1, -1);
     }
 
+    /**
+     *
+     * @param maxResults
+     * @param firstResult
+     * @return
+     */
     public List<ColegiadoHasUsuario> findColegiadoHasUsuarioEntities(int maxResults, int firstResult) {
         return findColegiadoHasUsuarioEntities(false, maxResults, firstResult);
     }
@@ -217,6 +249,11 @@ public class ColegiadoHasUsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public ColegiadoHasUsuario findColegiadoHasUsuario(Integer id) {
         EntityManager em = getEntityManager();
         try {
@@ -226,6 +263,10 @@ public class ColegiadoHasUsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int getColegiadoHasUsuarioCount() {
         EntityManager em = getEntityManager();
         try {

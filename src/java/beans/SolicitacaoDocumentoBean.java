@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans;
 
 import controllers.ColegiadoHasUsuarioJpaController;
@@ -25,8 +20,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -96,7 +89,7 @@ public class SolicitacaoDocumentoBean implements Serializable {
     FileUploadEvent evt;
 
     public SolicitacaoDocumentoBean() {
-        
+
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
         usuario_logado = (String) session.getAttribute("USUARIO_LOGADO_NOME");
@@ -106,10 +99,8 @@ public class SolicitacaoDocumentoBean implements Serializable {
         controllerSolicitacao = new SolicitacaoJpaController();
         controllerUsuario = new UsuarioJpaController();
         controllerColegiado = new ColegiadoJpaController();
-//        controllerColegiadoHasUsuario = new ColegiadoHasUsuarioJpaController();
 
         listaDocumentos = new ArrayList();
-//        listaColegiados = new ArrayList();
 
         input = new InputText();
         idUsuario = (int) session.getAttribute("USUARIO_LOGADO_ID");
@@ -119,21 +110,22 @@ public class SolicitacaoDocumentoBean implements Serializable {
         listaColegiados = controllerColegiado.selectAll();
     }
 
-//    public SolicitacaoDocumentoBean() {
-//
-//    }
-//
-//    public SolicitacaoDocumentoBean(Solicitacao s, Usuario u) {
-//        this.solicitacao = s;
-//        this.usuario = u;
-//    }
 // <editor-fold defaultstate="collapsed" desc="Documento">
     //Modificar o a variavel PATH antes da entrega e na implantação 
-    
-    public int totalPaginas(Documento doc){
+    /**
+     *
+     * @param doc
+     * @return
+     */
+    public int totalPaginas(Documento doc) {
         return doc.getQuantidadecopias() * doc.getQuantidadepaginas();
     }
-    
+
+    /**
+     *
+     * @param evt
+     * @throws IOException
+     */
     public void upload(FileUploadEvent evt) throws IOException {
         Calendar calendar = Calendar.getInstance();
         controllerUsuario = new UsuarioJpaController();
@@ -155,8 +147,8 @@ public class SolicitacaoDocumentoBean implements Serializable {
 
             try {
                 IOUtils.copy(input, output);
-//                System.out.println("doc end:" + doc.getEnderecodocumento());
                 doc.setQuantidadepaginas((int) PDDocument.load(doc.getEnderecodocumento()).getNumberOfPages());
+
                 //criar o arquivo e adicionar para a lista
                 try {
                     listaDocumentos.add(doc);
@@ -175,6 +167,12 @@ public class SolicitacaoDocumentoBean implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param submit
+     * @return
+     * @throws FileNotFoundException
+     */
     public String prepararDownload(ActionEvent submit) throws FileNotFoundException {
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
@@ -203,6 +201,10 @@ public class SolicitacaoDocumentoBean implements Serializable {
         return pasta;
     }
 
+    /**
+     *
+     * @param submit
+     */
     public void removerDaLista(ActionEvent submit) {
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
@@ -233,6 +235,11 @@ public class SolicitacaoDocumentoBean implements Serializable {
 
 //</editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Solicitacao">
+    /**
+     *
+     * @param submit
+     * @return
+     */
     public String escoherArquivo(ActionEvent submit) {
         try {
             solicitacao.setDocumentoList(getListaDocumentos());
@@ -275,6 +282,12 @@ public class SolicitacaoDocumentoBean implements Serializable {
         return pasta;
     }
 
+    /**
+     *
+     * @param submit
+     * @return
+     * @throws FileNotFoundException
+     */
     public String downloadArquivo(ActionEvent submit) throws FileNotFoundException {
         System.out.println("dataDowload" + dataDownload);
 
@@ -309,6 +322,10 @@ public class SolicitacaoDocumentoBean implements Serializable {
         return "";
     }
 
+    /**
+     *
+     * @return
+     */
     public String novaSolicitacao() {
         List<Documento> lista = new ArrayList();
 
@@ -332,11 +349,11 @@ public class SolicitacaoDocumentoBean implements Serializable {
             for (int i = 0; i < listaDocumentos.size(); i++) {
                 listaDocumentos.get(i).setSolicitacaoIdsolicitacao(solicitacao);
                 try {
-                    if(solicitacao.getFrenteVerso().equalsIgnoreCase("Sim")){
+                    if (solicitacao.getFrenteVerso().equalsIgnoreCase("Sim")) {
                         System.out.println("É frente e verso, então QTD PAGINA É: " + listaDocumentos.get(i).getQuantidadepaginas());
-                        System.out.println("E a metade é: " + (int)Math.ceil((double)listaDocumentos.get(i).getQuantidadepaginas()/2));
+                        System.out.println("E a metade é: " + (int) Math.ceil((double) listaDocumentos.get(i).getQuantidadepaginas() / 2));
                     }
-                    
+
                     controllerDocumento.create(listaDocumentos.get(i));
                     lista.add(listaDocumentos.get(i));
                 } catch (Exception e) {
@@ -359,6 +376,10 @@ public class SolicitacaoDocumentoBean implements Serializable {
         return "";
     }
 
+    /**
+     *
+     * @param idSolicitacao
+     */
     public void apagarSolicitacao(int idSolicitacao) {
         controllerSolicitacao = new SolicitacaoJpaController();
         Solicitacao temp = new Solicitacao();
@@ -374,7 +395,6 @@ public class SolicitacaoDocumentoBean implements Serializable {
 
             controllerSolicitacao.destroy(idSolicitacao);
 
-//            controllerUsuario.destroy(idUsuario);
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Um ou mais campos não estão preenchidos corretamente!", ""));
         }
@@ -385,6 +405,10 @@ public class SolicitacaoDocumentoBean implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Solicitacao> listaDoProfessor() {
         List<Solicitacao> lista = new ArrayList();
         lista = controllerUsuario.selectAllSolicitacoes(usuario);
@@ -457,11 +481,10 @@ public class SolicitacaoDocumentoBean implements Serializable {
         return nome;
     }
 
-    public void mensagemEmail(){
+    public void mensagemEmail() {
         FacesContext.getCurrentInstance().addMessage("", new FacesMessage("Enviando e-mail..."));
     }
-    
-    
+
     public void updateSolicitacaoDetalhada() {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
@@ -469,10 +492,8 @@ public class SolicitacaoDocumentoBean implements Serializable {
         atendente = controllerUsuario.findUsuario(user);//atendente é o funcinario logado que der o update;
 
         solicitacaoDetalhada.setAtendente(user);
-//        solicitacao.setAtendente(user);
         System.out.println("Atendente: " + atendente.getNome());
         nomeAtendente = atendente.getNome();
-//        System.out.println("Nome atendente: " + nomeAtendente);
         estado = estadoSolicitacaoDetalhada;
         solicitacaoDetalhada.setMotivorecusa(motivoRecusa);
         solicitacaoDetalhada.setEstado(estadoSolicitacaoDetalhada);
@@ -490,12 +511,13 @@ public class SolicitacaoDocumentoBean implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        } else {
-//            System.out.println("");
-//        }
     }
 
 //<editor-fold defaultstate="collapsed" desc="calendar">
+    /**
+     *
+     * @param event
+     */
     public void onDateSelect(SelectEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -798,26 +820,50 @@ public class SolicitacaoDocumentoBean implements Serializable {
         return colegiadoSelecionado;
     }
 
+    /**
+     *
+     * @param colegiadoSelecionado
+     */
     public void setColegiadoSelecionado(int colegiadoSelecionado) {
         this.colegiadoSelecionado = colegiadoSelecionado;
     }
 
+    /**
+     *
+     * @return
+     */
     public Solicitacao getSolicitacaoDetalhada() {
         return solicitacaoDetalhada;
     }
 
+    /**
+     *
+     * @param solicitacaoDetalhada
+     */
     public void setSolicitacaoDetalhada(Solicitacao solicitacaoDetalhada) {
         this.solicitacaoDetalhada = solicitacaoDetalhada;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEstadoSolicitacaoDetalhada() {
         return estadoSolicitacaoDetalhada;
     }
 
+    /**
+     *
+     * @param estadoSolicitacaoDetalhada
+     */
     public void setEstadoSolicitacaoDetalhada(String estadoSolicitacaoDetalhada) {
         this.estadoSolicitacaoDetalhada = estadoSolicitacaoDetalhada;
     }
 
+    /**
+     *
+     * @param valor
+     */
     public void render(String valor) {
         if (valor.equals("Recusado")) {
             teste = true;

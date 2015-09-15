@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans;
 
 import controllers.DocumentoJpaController;
@@ -55,6 +50,10 @@ public class DocumentoBean {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public List<PaginasInfo> listaUsuariosSelecionados() {
         List<Usuario> lu = new ArrayList();
 
@@ -72,16 +71,18 @@ public class DocumentoBean {
         return lista;
     }
 
+    /**
+     *
+     * @return
+     */
     public int paginasPorColegiado() {
         int cntTotal = 0;
 
         for (PaginasInfo listaTotal : lista) {
-//            System.out.println(" ::::::?????" + listaTotal);
             cntTotal += listaTotal.getQtTotal();
         }
 
         return cntTotal;
-//        return controllerDocumento.paginasPorColegiado(this.idColegiadoSelecionado);
     }
 
     public Usuario getUsuario() {

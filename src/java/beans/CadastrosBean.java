@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans;
 
 import controllers.ColegiadoHasUsuarioJpaController;
@@ -15,16 +10,12 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.servlet.http.HttpSession;
 import models.Documento;
 import models.Solicitacao;
 import models.Usuario;
@@ -95,6 +86,12 @@ public class CadastrosBean implements Serializable {
         controllerColegiadoHasUsuario.listaUsuariosSelecionados();//this.idColegiadoSelecionado
     }
 
+    /**
+     *
+     * @param submit
+     * @return
+     * @throws NoSuchAlgorithmException
+     */
     public String cadastrarUsuario(ActionEvent submit) throws NoSuchAlgorithmException {
 
         List<Usuario> lista = new ArrayList();
@@ -125,8 +122,6 @@ public class CadastrosBean implements Serializable {
             if ((matricula != 0) && !nome.equals("") && !tipo.equals("") && !senha.equals("") && !estado.equals("")) {
                 try {
                     String senhaHash;
-//                    senhaHash = hash.SHA.generateHash(senha);
-//                    senhaHash = senha;
                     temp.setSenha(senhaAux);
 
                     controllerUsuario.create(temp);
@@ -168,26 +163,28 @@ public class CadastrosBean implements Serializable {
                     List<Documento> ld = list.get(i).getDocumentoList();
                     for (int j = 0; j < ld.size(); j++) {
                         dc.destroy(ld.get(j).getIddocumento());
-
                     }
 
                 }
 
                 for (int i = 0; i < list.size(); i++) {
                     cs.destroy(list.get(i).getIdsolicitacao());
-
                 }
             }
             controllerUsuario.destroy(idUsuario);
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Deletado com sucesso!", ""));
 
-//            controllerUsuario.destroy(idUsuario);
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Um ou mais campos não estão preenchidos corretamente!", ""));
         }
     }
 
+    /**
+     *
+     * @param submit
+     * @return
+     */
     public String encontrarUsuario(ActionEvent submit) {
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
@@ -204,6 +201,11 @@ public class CadastrosBean implements Serializable {
         return "";
     }
 
+    /**
+     *
+     * @param submit
+     * @return
+     */
     public String alterarUsuario(ActionEvent submit) {
         controllerUsuario = new UsuarioJpaController();
 
@@ -242,24 +244,32 @@ public class CadastrosBean implements Serializable {
                 usuarioAux.setNome("");
                 usuarioAux.setTipo("");
                 usuarioAux.setSenha("");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Alterado com sucesso!", ""));
+                FacesContext.getCurrentInstance().addMessage(null, 
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Alterado com sucesso!", ""));
             } catch (Exception e) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Um ou mais campos não estão preenchidos corretamente!", ""));
+                FacesContext.getCurrentInstance().addMessage(null, 
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Um ou mais campos não estão preenchidos corretamente!", ""));
             }
         } else {//se for adm
             controllerUsuario = new UsuarioJpaController();
             usuario.setNome(usuario.getNome());
             try {
                 controllerUsuario.edit(usuario);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Alterado com sucesso!", ""));
+                FacesContext.getCurrentInstance().addMessage(null, 
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Alterado com sucesso!", ""));
 
             } catch (Exception e) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Um ou mais campos não estão preenchidos corretamente!", ""));
+                FacesContext.getCurrentInstance().addMessage(null, 
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Um ou mais campos não estão preenchidos corretamente!", ""));
             }
         }
-        return "";
+        return null;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Usuario> listaUsuarios() {
         List<Usuario> lista = new ArrayList();
         controllerUsuario = new UsuarioJpaController();

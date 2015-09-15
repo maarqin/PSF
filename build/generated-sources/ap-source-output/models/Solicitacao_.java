@@ -9,7 +9,7 @@ import models.Colegiado;
 import models.Documento;
 import models.Usuario;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2015-09-03T15:57:35")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2015-09-15T15:47:46")
 @StaticMetamodel(Solicitacao.class)
 public class Solicitacao_ { 
 

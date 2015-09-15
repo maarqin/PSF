@@ -1,0 +1,231 @@
+#logo-inicial{
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+img#logo-inicial:hover{
+    background-color: transparent;
+}
+
+nav ul li img:hover{
+    background:#68caf0;
+}
+
+nav ul li.tam{
+    width: 18%;
+    text-transform: uppercase;  
+    text-align: center;
+    border-radius: 10px;
+}
+
+#inicio{
+    font-family: "Artbrush";
+    font-size: 100px;
+    color: #363636;
+    margin: 0;
+    position: relative;      
+}
+
+#logo-container{
+    width: 400px;
+    margin: 0 auto;
+    position: relative;
+    margin-top: 4%;
+}
+
+#login{
+    margin-top: 6%;
+    padding-bottom:10px;
+}
+
+.rodape{
+    width: 100%;
+    bottom:0px;
+    position: absolute;
+}
+
+.rodape img{
+    margin: 0 auto;
+    position: relative;
+}
+
+input{
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+#nav-body{
+    padding: 60px;
+}
+
+body{
+    margin-top: 20px;
+}
+
+
+
+button{
+    margin: 0px 5px;
+}
+
+hr.style-two {
+    border: 0;
+    height: 1px;
+    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+    background-image: -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+    background-image: -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+    background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+    width: 80%;
+}
+
+@font-face{
+    font-family: "Artbrush";
+    src: "../fonts/Artbrush.tff";
+}
+
+@font-face{
+    font-family: "Molengo";
+    src: "../fonts/Molengo-Regular.tff";
+}
+
+@font-face{
+    font-family: "Steelfish";
+    src: "../fonts/steelfish rg.tff";
+}
+
+nav ul li a{
+    font-family: "Steelfish";
+    font-size: 25px !important;
+}
+
+/*padrão de tabela*/
+.TFtable{
+    width:100%; 
+    border-collapse:collapse; 
+    display: table;
+    width: 100%;
+}
+.TFtable th{ 
+    padding:7px; 
+    border:#4e95f4 1px solid;
+    background-color: #13a7c7;
+    font-weight: 700;
+}
+.TFtable td{ 
+    padding:7px; border:#4e95f4 1px solid;
+}
+
+.TFtable td a{ 
+    color: #f6931f;
+}
+
+.TFtable td a:hover{ 
+    color: #999999;
+    background-color: transparent;
+}
+
+.TFtable td a:selected{ 
+    color: #999999;
+    //background-color: transparent;
+}
+
+.select{
+    background-color: #fcefa1 !important;
+}
+
+/* provide some minimal visual accomodation for IE8 and below */
+.TFtable tr{
+    background: #b8d1f3;
+    width: 100%;
+    display: table;
+    text-align: left;
+}
+/*  Define the background color for all the ODD background rows  */
+.TFtable tr:nth-child(odd){ 
+    background: #b8d1f3;
+}
+/*  Define the background color for all the EVEN background rows  */
+.TFtable tr:nth-child(even){
+    background: #dae5f4;
+}
+
+table.TFtable thead, table.TFtable tbody {
+    float: left;
+    width: 100%;
+}
+
+table.TFtable tbody {
+    overflow: auto;
+    height: 150px;
+}
+
+table.ag tbody {
+    overflow: auto;
+    height: auto !important;
+}
+
+/*para a tabela de sessões*/
+table.TFsessoes tbody {
+    overflow: auto;
+    height: 300px;
+}
+
+
+table.TFtable th, table.TFtable td {
+    width: 33%;
+}
+
+table.proc th, table.proc td {
+    width: 25%;
+}
+
+.label{
+    float: left; 
+    //padding-left:15px;
+}
+
+.label1{
+    float: left; 
+    padding-left:15px;
+}
+
+.label-select{
+    padding-bottom: 10px;
+}
+
+.filtro-form{
+    padding-bottom: 1px;
+}
+
+.page-label{
+    font-family: 'Steelfish';
+    font-size: 25px;
+    text-align:left;
+}
+
+#amount{
+    /*quantidade de sessões selecionadas*/
+    border:0; 
+    color:#f6931f; 
+    font-weight:bold;
+}
+
+input.form-control{
+    margin-left:0px;
+    margin-top:0px;
+}
+.form-group{
+    margin-bottom:15px !important;
+    margin-left: 15px;
+}
+
+.botaoTabela{
+    margin-top: 15px;
+}
+
+.busca-filtro{
+    margin-top: 20px;
+}

@@ -1,11 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:jsf="http://java.sun.com/jsf"   
       xmlns:h="http://xmlns.jcp.org/jsf/html"   
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"     
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:decorate template="/layout/adm.xhtml">
@@ -15,7 +13,10 @@
                 <p:dataTable id="tabela" emptyMessage="Nenhuma solicitação cadastrada"
                              value="#{solicitacaoDocumentoBean.listaSolicitacoes()}" var="solicitacao" 
                              paginator="true" rows="10" style="font-size: 80%">
-                    <p:column headerText="Número de protocolo" filterBy="#{solicitacao.numprotocolo}"><h:outputText value="#{solicitacao.numprotocolo}"/>  </p:column>
+                    <p:column headerText="Número de protocolo" 
+                              filterBy="#{solicitacao.numprotocolo}">
+                        <h:outputText value="#{solicitacao.numprotocolo}"/>
+                    </p:column>
                     <p:column headerText="Data de aplicação" filterBy="#{solicitacao.dataaplicacao}">
                         <h:outputText value="#{solicitacao.dataaplicacao}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
@@ -26,15 +27,21 @@
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Período da aplicação" filterBy="#{solicitacao.periodoaplicacao}"><h:outputText value="#{solicitacao.periodoaplicacao}"/>  </p:column>
-                    <p:column headerText="Estado da solicitação" filterBy="#{solicitacao.estado}"><h:outputText value="#{solicitacao.estado}"/>  </p:column>
-                    <p:column headerText="Atendente" filterBy="#{solicitacaoDocumentoBean.retornaAtendente(solicitacao)}"><h:outputText value="#{solicitacaoDocumentoBean.retornaAtendente(solicitacao)}"/>  </p:column>
+                    <p:column headerText="Período da aplicação" 
+                              filterBy="#{solicitacao.periodoaplicacao}">
+                        <h:outputText value="#{solicitacao.periodoaplicacao}"/>
+                    </p:column>
+                    <p:column headerText="Estado da solicitação" 
+                              filterBy="#{solicitacao.estado}">
+                        <h:outputText value="#{solicitacao.estado}"/>
+                    </p:column>
+                    <p:column headerText="Atendente"
+                              filterBy="#{solicitacaoDocumentoBean.retornaAtendente(solicitacao)}">
+                        <h:outputText value="#{solicitacaoDocumentoBean.retornaAtendente(solicitacao)}"/>
+                    </p:column>
                     <p:column headerText="Solicitante" filterBy="#{solicitacao.usuarioIdusuario.nome}">
-                        <h:outputText value="#{solicitacao.usuarioIdusuario.nome}" style="word-wrap:break-word;"/>  </p:column>
-                    <!--<p:column headerText="Colegiado" filterBy="# {solicitacaoDocumentoBean.nome}"><h:outputText value="# {solicitacao.usuarioIdusuario.nome}"/>  </p:column>-->
-                    <!--                    <p:column headerText="Ação">
-                                            <p:commandButton actionListener="# {solicitacaoDocumentoBean.apagarSolicitacao(solicitacao.idsolicitacao)}" update=":form:tabela" icon="ui-icon-trash"/> 
-                                        </p:column>-->
+                        <h:outputText value="#{solicitacao.usuarioIdusuario.nome}" style="word-wrap:break-word;"/>
+                    </p:column>
                     <p:column headerText="Ação">
                         <p:commandButton  action="#{solicitacaoDocumentoBean.setSolicitacaoDetalhada(solicitacao)}"
                                           update=":form:dialog" oncomplete="PF('dlg1').show();" icon="ui-icon-search"/>
@@ -69,11 +76,11 @@
                             <p:outputLabel value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.frenteVerso}" style="color: red"/>
 
                             <p:outputLabel value="Motivo da recusa: "/> <p:outputLabel value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.motivorecusa}"/>
-                            <!--<p:commandButton value="Mudar estado" actionListener="# {solicitacaoDocumentoBean.updateSolicitacaoDetalhada()}" update=":form:tabela" oncomplete="PF('dlg1').hide();"/>-->
                         </h:panelGrid>
                         <p:separator style="width: 100%"/>
 
-                        <p:dataTable id="docs" var="doc"  value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.documentoList}">
+                        <p:dataTable id="docs" var="doc" 
+                                     value="#{solicitacaoDocumentoBean.solicitacaoDetalhada.documentoList}">
                             <p:column headerText="Nome do Arquivo">
                                 <h:outputText value="#{doc.nomedocumento}"/>
                             </p:column>
@@ -83,7 +90,10 @@
                             </p:column>
 
                             <p:column>
-                                <p:commandButton style="font-size: 13px" value="Baixar" ajax="false" actionListener="#{solicitacaoDocumentoBean.prepararDownload(submit)}"  icon="ui-icon-arrowthick-1-s">
+                                <p:commandButton style="font-size: 13px" 
+                                                 value="Baixar" ajax="false" 
+                                                 actionListener="#{solicitacaoDocumentoBean.prepararDownload(submit)}" 
+                                                 icon="ui-icon-arrowthick-1-s">
 
                                     <p:fileDownload  value="#{solicitacaoDocumentoBean.dataDownload}" />
                                     <f:param name="linkFile" value="#{doc.enderecodocumento}"/>

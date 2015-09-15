@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans;
 
 import controllers.UsuarioJpaController;
@@ -17,7 +12,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import models.Usuario;
 
@@ -32,13 +26,16 @@ public class SessionBean implements Serializable {
     private String email, senha;
     private HttpSession session;
     private FacesContext fc;
-//    private HttpServletRequest servletRequest;
     private Usuario USUARIO_LOGADO;
     UsuarioJpaController controllerUsuario;
 
+    /**
+     *
+     * @return
+     * @throws NoSuchAlgorithmException
+     */
     public String logar() throws NoSuchAlgorithmException {
         int controle = 0;
-        //senha = SHA.generateHash(senha);
 
         controllerUsuario = new UsuarioJpaController();
         List<Usuario> listaUsuario = new ArrayList();
@@ -83,7 +80,9 @@ public class SessionBean implements Serializable {
                 } else {
                     System.out.println("Tipo ou estado invalido");
                     FacesMessage message = null;
-                    message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
+                    
+                    message = new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                            "Loggin Error", "Invalid credentials");
                     FacesContext.getCurrentInstance().addMessage(null, message);
                 }
             } else {
@@ -95,12 +94,18 @@ public class SessionBean implements Serializable {
         if (controle > 0) {
             session.invalidate();
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Estado, email ou senha inválido.", ""));
+            FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                            "Estado, email ou senha inválido.", ""));
         }
 
-        return "";
+        return null;
     }
 
+    /**
+     *
+     * @return
+     */
     public String logOut() {
         fc = FacesContext.getCurrentInstance();
         session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -112,6 +117,10 @@ public class SessionBean implements Serializable {
         return "/faces/index?faces-redirect=true";
     }
 
+    /**
+     *
+     * @return
+     */
     public String esqueceuSenha() {
         controllerUsuario = new UsuarioJpaController();
         List<Usuario> listaUsuario = new ArrayList();
@@ -122,27 +131,39 @@ public class SessionBean implements Serializable {
             if (listaUsuario.get(i).getEmail().equalsIgnoreCase(email)) {
                 aux = listaUsuario.get(i);
                 try {
-                    String senhaNova = GenerateSenha.generateNewSenha(); //gera nova senha de 16 digitos numericos
-                    String senhaNovaHash = SHA.generateHash(senhaNova); //gera o hash da senha aleatoria construida
+                    //gera nova senha de 16 digitos numericos
+                    String senhaNova = GenerateSenha.generateNewSenha();
+                    
+                    //gera o hash da senha aleatoria construida
+                    String senhaNovaHash = SHA.generateHash(senhaNova); 
                     aux.setSenha(senhaNovaHash);
                     controllerUsuario.edit(aux);
                     MainTester m = new MainTester();
-                    m.emailSender(aux.getEmail(), senhaNova); //envia para o email digitado a senha gerada
-                    FacesContext.getCurrentInstance().addMessage("", new FacesMessage("E-mail enviado"));
+                    
+                    //envia para o email digitado a senha gerada
+                    m.emailSender(aux.getEmail(), senhaNova); 
+                    FacesContext.getCurrentInstance().addMessage("", 
+                            new FacesMessage("E-mail enviado"));
                     return "index.xhtml?faces-redirect=true";
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_WARN, "Email incorreto.", ""));
+                    FacesContext.getCurrentInstance().addMessage("", 
+                            new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                                    "Email incorreto.", ""));
                 }
             } else {
 
             }
 
         }
-        return "";
+        return null;
     }
 
+    /**
+     *
+     * @return
+     */
     public String interceptor() {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
@@ -155,7 +176,7 @@ public class SessionBean implements Serializable {
 
         }
 
-        return "";
+        return null;
     }
 
     public String getEmail() {
@@ -190,13 +211,6 @@ public class SessionBean implements Serializable {
         this.fc = fc;
     }
 
-//    public HttpServletRequest getServletRequest() {
-//        return servletRequest;
-//    }
-//
-//    public void setServletRequest(HttpServletRequest servletRequest) {
-//        this.servletRequest = servletRequest;
-//    }
     public Usuario getUSUARIO_LOGADO() {
         return USUARIO_LOGADO;
     }

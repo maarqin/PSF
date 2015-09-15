@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controllers;
 
 import controllers.exceptions.IllegalOrphanException;
@@ -36,6 +31,10 @@ public class SolicitacaoJpaController implements Serializable {
     }
     private EntityManagerFactory emf = null;
 
+    /**
+     *
+     * @return
+     */
     public EntityManager getEntityManager() {
         try {
             if (emf == null) {
@@ -49,6 +48,10 @@ public class SolicitacaoJpaController implements Serializable {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Solicitacao> selectAll() {
         EntityManager em = getEntityManager();
         Query query = em.createQuery("SELECT s FROM Solicitacao s");
@@ -56,6 +59,11 @@ public class SolicitacaoJpaController implements Serializable {
         return qlista;
     }
 
+    /**
+     *
+     * @param u
+     * @return
+     */
     public List<Solicitacao> getListSolProfessor(Usuario u) {
         List<Solicitacao> lista = new ArrayList();
         EntityManager em = getEntityManager();
@@ -65,6 +73,10 @@ public class SolicitacaoJpaController implements Serializable {
         return lista;
     }
 
+    /**
+     *
+     * @param solicitacao
+     */
     public void create(Solicitacao solicitacao) {
         if (solicitacao.getDocumentoList() == null) {
             solicitacao.setDocumentoList(new ArrayList<Documento>());
@@ -115,6 +127,13 @@ public class SolicitacaoJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param solicitacao
+     * @throws IllegalOrphanException
+     * @throws NonexistentEntityException
+     * @throws Exception
+     */
     public void edit(Solicitacao solicitacao) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
@@ -133,7 +152,8 @@ public class SolicitacaoJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Documento " + documentoListOldDocumento + " since its solicitacaoIdsolicitacao field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Documento " + documentoListOldDocumento + 
+                            " since its solicitacaoIdsolicitacao field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -199,6 +219,12 @@ public class SolicitacaoJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @throws IllegalOrphanException
+     * @throws NonexistentEntityException
+     */
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
@@ -241,10 +267,20 @@ public class SolicitacaoJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Solicitacao> findSolicitacaoEntities() {
         return findSolicitacaoEntities(true, -1, -1);
     }
 
+    /**
+     *
+     * @param maxResults
+     * @param firstResult
+     * @return
+     */
     public List<Solicitacao> findSolicitacaoEntities(int maxResults, int firstResult) {
         return findSolicitacaoEntities(false, maxResults, firstResult);
     }
@@ -265,6 +301,11 @@ public class SolicitacaoJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Solicitacao findSolicitacao(Integer id) {
         EntityManager em = getEntityManager();
         try {
@@ -274,6 +315,10 @@ public class SolicitacaoJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int getSolicitacaoCount() {
         EntityManager em = getEntityManager();
         try {

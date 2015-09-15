@@ -1,0 +1,608 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 09/05/2014, 17:27:27
+    Author     : jean
+*/
+//menu======================================
+
+
+nav {background:#68caf0;float:left;}
+nav ul {text-align:left}
+nav ul li {border-radius: 10px;float:left;display:inline;}
+nav ul li:hover {background:#FF9811;} /*beirada redonda do menu*/
+
+nav ul li a {display:block;padding:15px 25px;color:#fff;background:#68caf0;}
+nav ul li ul {position:absolute;width:120px;background:#68caf0;text-align: left;border-radius: 5px;padding-left:0px}
+
+nav ul li ul li {width: 180px; float: left;padding-right: 10px}
+
+nav ul li ul li a {display:block;padding:15px 10px;color:#fff;}
+nav ul li ul li:hover a {background:#FF9811;} /*item do menu*/
+nav ul li ul.fallback { display:none; color: #fff; border-radius: 5px;}
+nav ul li:hover ul.fallback { alignment-adjust: auto; display:block; color: #fff;}
+nav ul li a:link{ color: #fff;}
+.navbar-inverse{
+    background:#68caf0;
+    border-color: #fff;
+}
+
+//===============================================================================
+
+.btnCadastrar
+{
+ background-color: #000000 !important;   
+    
+}
+
+
+body
+{
+    font-family: Verdana, "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+    font-size: 16px;
+    font-size-adjust: 0.47;
+}
+
+
+
+.margem{
+    margin-left: 0%;
+}
+
+.radio input[type="radio"]{
+    margin-left: 5px;
+    text-align: center;
+}
+.radio label{
+    padding-left: 25px;
+}
+
+table.radio {
+    margin:0; 
+    float:left;
+}
+/*
+--------------------------------------------CSS dos frames----------------------------------------------------- 
+*/
+
+#iframe1
+{width: 99%;
+ height: 40px;  
+
+}
+
+#iframe2{
+    height: 98.7%;
+    width: 99%;
+}
+#iframe3{
+    height: 98.7%;
+    width: 90%;
+}
+#all{
+    background-color: #E4E4E4;
+}
+
+#doge{
+    margin-top: 225px;
+    width: 100%;
+    background-image: url("../images/omfgdogs.gif") ;
+}
+
+#direitadiv{
+    margin-top: 10px;
+    float: left;
+    border: 3px solid #68727B;
+    border: 3px solid #68727B;
+    height: 477px;
+    width: 176px;
+    text-align: center;
+
+}
+#esquerdadiv{
+    margin-top: 10px;
+    float: left;
+    width: 710px;
+    height: 520px;
+    border: 3px solid #68727B;
+    border-radius: 15px;
+    text-align: -webkit-right;
+    /*margin-left: 20%;*/
+}
+
+
+
+#menudiv{
+    margin-top: 48%;
+    position: absolute;
+    width: 900px;
+    height: 25px;
+    text-align: -webkit-center;
+
+}
+#esqueceuSenha{
+    display: inline-block;
+    text-align: center;
+    margin-top: 5%
+
+}
+#btnSenha{
+    display: flex;
+    text-align: center;
+
+    margin-left: 40%;
+}
+
+#formSenha
+{
+    margin: 0 auto;
+    width: 25%;
+    margin-top: 10%;
+    background-color: #ff9900;
+    border: 3px solid #68727B;
+    border-radius: 10px;
+    height: 0%;
+}
+
+/*
+=====================================outos css======================================
+*/
+
+#opcoa{
+
+    position: absolute;
+    bottom: 10px;
+}
+#dentro_do_login{
+    border: 1px #16161D solid;
+}
+#login
+{   width: 100%;
+    height: 50%;
+    background-color: #FF9811;
+    margin-top: 15%;
+    text-align: center;
+}
+
+#botao{
+    position: absolute;
+    margin-top: 0.8%;
+    margin-left: 93%;
+
+
+}
+
+
+
+#baner
+{
+    margin-top: -8%;
+    width: 100%;
+    height: 210px;
+    background-color: #E4E4E4;
+    float: left;
+}
+#unifil
+{
+    -webkit-float: left;
+    -webkit-margin-left: 2%;
+
+    -moz-float: left;
+    -moz-margin-left: 2%;
+
+    -ms-float: left;
+    -ms-margin-left: 2%;
+
+    -o-float: left;
+    -o-margin-left: 2%;
+
+    float: left;
+    margin-left: 2%;
+    margin-top: 7%;
+}
+#npi
+{
+    -webkit-float: right;
+    -webkit-margin-rightt: 2%;
+
+    -moz-float: right;
+    -moz-margin-right: 2%;
+
+    -ms-float: right;
+    -ms-margin-right: 2%;
+
+    -o-float: right;
+    -o-margin-right: 2%;
+
+    float: right;
+    margin-right: 2%;
+    margin-top: 7%;
+
+
+}
+#btn{
+    margin-top: 38%;
+}
+#tabelaPacienteInicio{
+    width: 500px;
+    float: right;
+    margin-top: -53%;
+}
+
+
+#divCadastro{
+    font-size: 13px;
+    float: left;
+    width: 80%;
+    border: 3px solid #68727B;
+    border-radius: 9px;
+}
+
+#divCadastro td
+{
+    padding: 10px;
+}
+
+#divCadastrob{
+    border: 3px solid #68727B;
+    /* margin-top: -27.6%; */
+    /*    margin-left: 42%;*/
+    height: 275px;
+    width: 180px;    
+    float: left;
+    /*background-color:#ff9900;*/
+
+}
+#cadastroMenu{
+    text-align: -webkit-center;
+
+
+}
+#menuProjetosDiv{
+    text-align: -webkit-center;
+    width: 778px;
+
+}
+#cadastroProjetoDiv{
+    margin-left: 30%;
+
+    width: 175px;
+    border: 3px solid #68727B;
+}
+
+#linhaVetical{
+    border: 1px #16161D solid;
+    height: 100%;
+    width: 10px;
+    color: #16161D;
+}
+#linhaHorizontal{
+    width: 100%;
+    height: 10px;
+    color: #16161D;
+}
+#linha_mennu
+{
+    -webkit-border-bottom-style: solid;
+    -webkit-border-width: 4px;
+    -webkit-margin-top: -8px;
+    -webkit-margin-left: 0px;
+    -webkit-margin-right: 0px;
+    -webkit-background-color: #DEDEDE;
+    -webkit-border-color: #DEDEDE;
+    /*    -webkit-box-shadow: 0px 0px 1em #666;*/
+
+    -moz-border-bottom-style: solid;
+    -moz-border-width: 4px;
+    -moz-margin-top: -8px;
+    -moz-margin-left: 0px;
+    -moz-margin-right: 0px;
+    -moz-background-color: #DEDEDE;
+    -moz-border-color: #DEDEDE;
+    /*-moz-box-shadow: 0px 0px 1em #666;*/
+
+    -ms-border-bottom-style: solid;
+    -ms-border-width: 4px;
+    -ms-margin-top: -8px;
+    -ms-margin-left: 0px;
+    -ms-margin-right: 0px;
+    -ms-background-color: #DEDEDE;
+    -ms-border-color: #DEDEDE;
+    /*-ms-box-shadow: 0px 0px 1em #666;*/
+
+    -o-border-bottom-style: solid;
+    -o-border-width: 4px;
+    -o-margin-top: -8px;
+    -o-margin-left: 0px;
+    -o-margin-right: 0px;
+    -o-background-color: #DEDEDE;
+    -o-border-color: #DEDEDE;
+    /*-o-box-shadow: 0px 0px 1em #666;*/
+
+    border-bottom-style: solid;
+    border-width: 4px;
+    margin-top: -8px;
+    margin-left: 0px;
+    margin-right: 0px;
+    background-color: #DEDEDE;
+    border-color: #DEDEDE;
+    /*box-shadow: 0px 0px 1em #666;*/
+    height: 20px;
+}
+
+#opcoa_pacientes{    
+    margin: 30%;
+    margin-left: 38%;
+    display: flex;
+
+}
+
+
+#div_index_adm{
+    padding-top: 20px;
+    background-color: #fff;
+    margin: auto;
+
+
+}
+#div_forms{
+    background-color: #fff;
+    margin: auto;
+    padding-top: 100px;
+    display: inline-block;
+    width: 20%;
+
+}
+
+#menu_altera_atendimento{
+    margin: auto;
+    text-align: -webkit-center;
+    margin-top: 15px;
+
+}
+a{
+    font-size: 17px;
+    color: #fff;
+    text-decoration: none;
+
+}
+a:hover
+{
+    color: #fff;
+    text-decoration: none;
+    float: inside;
+    //background: #FF9811;
+}
+a:active{
+    color: #fff;
+    text-decoration: none;
+
+}
+a:visited{
+    color: #fff;
+    text-decoration: none;
+
+}
+
+
+
+#div_altera_atendimento{
+    margin: auto;
+
+    text-align: -webkit-center;
+    border: 3px solid #68727B;
+    height: 480px;
+    width: 500px;
+    border-radius: 11px;
+    font-size: 15px;
+
+}
+
+.loginPanel
+{
+    margin: 0 auto;
+}
+#cadastroPacienteDiv{    
+    display: inline-flex;
+    display: flex;
+    border: 3px solid #68727B;
+    width: 710px;
+    height: 470px;
+    border-radius: 15px;
+
+    /*text-align: start;*/
+}
+effect_login{
+    position: fixed;
+    height: 100px;
+    width: 100px;
+
+
+}
+//================================classes=========================
+
+.toggler { width: 500px; height: 200px; }
+#button { padding: .5em 1em; text-decoration: none; }
+#effect { width: 240px; height: 135px; padding: 0.4em; position: relative; }
+#effect h3 { margin: 0; padding: 0.4em; text-align: center; }
+
+//=================modal css=============================
+
+
+
+#nav-body{
+    padding-top: 60px;
+    background: #16161D;
+    width: 100%;
+}
+
+body{
+    margin-top: 60px;
+}
+
+#alinhamento{
+    float: left;
+    text-align: left;
+}
+
+
+//modal
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    -webkit-transition: 0.6s;
+}
+
+.modalOverlay.is-inactive {
+    visibility: hidden;
+    background: rgba(0, 0, 0, 0);
+}
+
+.modalOverlay.is-active {
+    visibility: visible;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.modal {
+    margin: 100px auto;
+    background: #fff;
+    width: 100px;
+    padding: 20px;
+    -webkit-transition: 0.4s 0.6s;
+}
+
+.modalOverlay.is-inactive .modal {
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transform: scale(0.1);
+}
+
+.modalOverlay.is-active .modal {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transform: scale(1);
+}
+
+////======================
+
+#showpopup{
+    background-image: url("../../img/procurar.png");
+}
+
+
+
+#popup_box{
+    display: inline-block;
+    padding-top: 20px;
+    
+    
+}
+
+#containers{
+    min-width: 1024px;
+    padding-top: 20px;   
+    display: inline-block;
+}
+
+
+.panel-bady{
+    min-width: 1024px;
+    padding-top: 20px;   
+    display: inline-block;
+}
+
+/*============animações=============*/
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.animated.infinite {
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+.animated.hinge {
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+}
+
+.animated.bounceIn,
+.animated.bounceOut {
+  -webkit-animation-duration: .75s;
+  animation-duration: .75s;
+}
+
+@keyframes bounceInUp {
+  from, 60%, 75%, 90%, 100% {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 3000px, 0);
+    transform: translate3d(0, 3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: translate3d(0, -20px, 0);
+    transform: translate3d(0, -20px, 0);
+  }
+
+  75% {
+    -webkit-transform: translate3d(0, 10px, 0);
+    transform: translate3d(0, 10px, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(0, -5px, 0);
+    transform: translate3d(0, -5px, 0);
+  }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.bounceInUp {
+  -webkit-animation-name: bounceInUp;
+  animation-name: bounceInUp;
+}
+
+
+@keyframes bounceOutUp {
+  20% {
+    -webkit-transform: translate3d(0, -10px, 0);
+    transform: translate3d(0, -10px, 0);
+  }
+
+  40%, 45% {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 20px, 0);
+    transform: translate3d(0, 20px, 0);
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -2000px, 0);
+    transform: translate3d(0, -2000px, 0);
+  }
+}
+
+.bounceOutUp {
+  -webkit-animation-name: bounceOutUp;
+  animation-name: bounceOutUp;
+}

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controllers;
 
 import controllers.exceptions.NonexistentEntityException;
@@ -34,6 +29,10 @@ public class DocumentoJpaController implements Serializable {
     }
     private EntityManagerFactory emf = null;
 
+    /**
+     *
+     * @return
+     */
     public EntityManager getEntityManager() {
         try {
             if (emf == null) {
@@ -47,6 +46,11 @@ public class DocumentoJpaController implements Serializable {
 
     }
 
+    /**
+     *
+     * @param s
+     * @return
+     */
     public List<Documento> getListDocSolicitacao(Solicitacao s) {
         List<Documento> lista = new ArrayList();
         EntityManager em = getEntityManager();
@@ -56,6 +60,10 @@ public class DocumentoJpaController implements Serializable {
         return lista;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Documento> selectAll() {
         EntityManager em = getEntityManager();
         Query query = em.createQuery("SELECT u FROM Documento u");
@@ -63,28 +71,30 @@ public class DocumentoJpaController implements Serializable {
         return qlista;
     }
 
+    /**
+     *
+     * @param idColegiado
+     * @param idUsuario
+     * @return
+     */
     public PaginasInfo listaPaginasInfo(int idColegiado, int idUsuario) {
         Query query = getEntityManager().createNamedQuery("Documento.paginasColegiado")
                 .setParameter("idColegiado", idColegiado);
         query.setParameter("idUsuario", idUsuario);
 
-//        List<PaginasInfo> lista = new ArrayList<PaginasInfo>();
         List<Object[]> lo = query.getResultList();
         PaginasInfo pi = null;
-//        System.out.println("SIZE "+lo.size());
-            for (Object[] ob : lo) {
+        for (Object[] ob : lo) {
             pi = new PaginasInfo((Long) ob[2], (String) ob[0], (String) ob[1]);
-//            System.out.println("qtd " + ob[2]);
-//            System.out.println("nome " + ob[0]);
-//            System.out.println("email " + ob[1]);
-//            System.out.println("Copias " + ob[3]);
-//            if(tipo do usuario for = a profess){
-//            lista.add(pi);
-//            }
         }
         return pi;
     }
 
+    /**
+     *
+     * @param idColegiado
+     * @return
+     */
     public int paginasPorColegiado(int idColegiado) {
         int paginasPorColegiado = 0;
 
@@ -93,23 +103,22 @@ public class DocumentoJpaController implements Serializable {
         List<PaginasInfo> lista = new ArrayList<PaginasInfo>();
         List<Object[]> lo = query.getResultList();
         PaginasInfo pi;
-//        System.out.println("SIZE "+lo.size());
+
         for (Object[] ob : lo) {
             pi = new PaginasInfo((Integer) ob[2], (String) ob[0], (String) ob[1]);
-//            System.out.println("qtd " + ob[2]);
-//            System.out.println("nome " + ob[0]);
-//            System.out.println("email " + ob[1]);
-//            if(tipo do usuario for = a profess){
             lista.add(pi);
             if (pi.getQtPaginas() != null) {
                 System.out.println("qtd:" + pi.getQtPaginas());
                 paginasPorColegiado += pi.getQtPaginas();
             }
-//            }
         }
         return paginasPorColegiado;
     }
 
+    /**
+     *
+     * @param documento
+     */
     public void create(Documento documento) {
         EntityManager em = null;
         try {
@@ -133,6 +142,12 @@ public class DocumentoJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param documento
+     * @throws NonexistentEntityException
+     * @throws Exception
+     */
     public void edit(Documento documento) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
@@ -171,6 +186,11 @@ public class DocumentoJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @throws NonexistentEntityException
+     */
     public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
@@ -197,10 +217,20 @@ public class DocumentoJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Documento> findDocumentoEntities() {
         return findDocumentoEntities(true, -1, -1);
     }
 
+    /**
+     *
+     * @param maxResults
+     * @param firstResult
+     * @return
+     */
     public List<Documento> findDocumentoEntities(int maxResults, int firstResult) {
         return findDocumentoEntities(false, maxResults, firstResult);
     }
@@ -221,6 +251,11 @@ public class DocumentoJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Documento findDocumento(Integer id) {
         EntityManager em = getEntityManager();
         try {
@@ -230,6 +265,10 @@ public class DocumentoJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDocumentoCount() {
         EntityManager em = getEntityManager();
         try {

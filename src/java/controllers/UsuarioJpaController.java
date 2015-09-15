@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controllers;
 
 import controllers.exceptions.IllegalOrphanException;
@@ -35,6 +30,10 @@ public class UsuarioJpaController implements Serializable {
     }
     private EntityManagerFactory emf = null;
 
+    /**
+     *
+     * @return
+     */
     public EntityManager getEntityManager() {
         try {
             if (emf == null) {
@@ -48,6 +47,10 @@ public class UsuarioJpaController implements Serializable {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Usuario> selectAll() {
         EntityManager em = getEntityManager();
         Query query = em.createQuery("SELECT u FROM Usuario u");
@@ -55,6 +58,11 @@ public class UsuarioJpaController implements Serializable {
         return qlista;
     }
 
+    /**
+     *
+     * @param idUsuario
+     * @return
+     */
     public List<Solicitacao> selectAllSolicitacoes(Usuario idUsuario) {
         EntityManagerFactory fac = Persistence.createEntityManagerFactory("PSFPU");
         EntityManager em = fac.createEntityManager();
@@ -64,6 +72,11 @@ public class UsuarioJpaController implements Serializable {
         return qlista;
     }
 
+    /**
+     *
+     * @param idColegiado
+     * @return
+     */
     public List getQuantidadeDePaginas(int idColegiado) {
         List lista = new ArrayList();
 
@@ -79,6 +92,11 @@ public class UsuarioJpaController implements Serializable {
         return lista;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public List<Usuario> findUsuarioList(Integer id) {
         EntityManager em = getEntityManager();
         try {
@@ -92,6 +110,10 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param usuario
+     */
     public void create(Usuario usuario) {
         if (usuario.getColegiadoHasUsuarioList() == null) {
             usuario.setColegiadoHasUsuarioList(new ArrayList<ColegiadoHasUsuario>());
@@ -142,6 +164,13 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param usuario
+     * @throws IllegalOrphanException
+     * @throws NonexistentEntityException
+     * @throws Exception
+     */
     public void edit(Usuario usuario) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
@@ -226,6 +255,12 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @throws IllegalOrphanException
+     * @throws NonexistentEntityException
+     */
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
@@ -265,10 +300,20 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Usuario> findUsuarioEntities() {
         return findUsuarioEntities(true, -1, -1);
     }
 
+    /**
+     *
+     * @param maxResults
+     * @param firstResult
+     * @return
+     */
     public List<Usuario> findUsuarioEntities(int maxResults, int firstResult) {
         return findUsuarioEntities(false, maxResults, firstResult);
     }
@@ -289,6 +334,11 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Usuario findUsuario(Integer id) {
         EntityManager em = getEntityManager();
         try {
@@ -298,6 +348,10 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int getUsuarioCount() {
         EntityManager em = getEntityManager();
         try {
